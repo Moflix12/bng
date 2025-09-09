@@ -86,13 +86,7 @@
             background: #ccc;
             color: #333;
             position: relative;
-            animation: shake 0.5s infinite;
-        }
-
-        @media (hover: none) {
-            .no-btn {
-                pointer-events: none;
-            }
+            pointer-events: auto; /* Allow interaction for movement */
         }
 
         @keyframes pulse {
@@ -105,14 +99,6 @@
             0% { transform: translateY(-5px) rotate(0deg); }
             50% { transform: translateY(5px) rotate(1deg); }
             100% { transform: translateY(-5px) rotate(0deg); }
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            50% { transform: translateX(8px); }
-            75% { transform: translateX(-4px); }
-            100% { transform: translateX(0); }
         }
 
         .hearts-bg {
@@ -198,7 +184,7 @@
         <div class="heart"></div>
         <div class="buttons">
             <button class="yes-btn" onclick="showSuccessMessage()">آشتی می‌کنم</button>
-            <button class="no-btn">آشتی نمی‌کنم</button>
+            <button class="no-btn" onclick="moveButton()">آشتی نمی‌کنم</button>
         </div>
     </div>
     <div class="hearts-bg">
@@ -221,26 +207,30 @@
             }, 1500);
         }
 
-        if (window.matchMedia('(hover: none)').matches) {
-            document.querySelector('.no-btn').style.pointerEvents = 'none';
-        } else {
-            document.querySelector('.no-btn').addEventListener('mouseover', function() {
-                const container = document.querySelector('.container');
-                const containerRect = container.getBoundingClientRect();
-                const buttonRect = this.getBoundingClientRect();
-                
-                // Calculate max boundaries within container, accounting for padding
-                const maxX = containerRect.width - buttonRect.width - 50; // 25px padding on each side
-                const maxY = containerRect.height - buttonRect.height - 50; // 25px padding on each side
-                
-                // Generate random position within container
-                const newX = 25 + Math.random() * maxX; // Offset by padding
-                const newY = 25 + Math.random() * maxY; // Offset by padding
-                
-                this.style.position = 'absolute';
-                this.style.left = newX + 'px';
-                this.style.top = newY + 'px';
-            });
+        function moveButton() {
+            const noBtn = document.querySelector('.no-btn');
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Calculate max boundaries within container, accounting for padding
+            const maxX = containerRect.width - buttonRect.width - 50; // 25px padding on each side
+            const maxY = containerRect.height - buttonRect.height - 50; // 25px padding on each side
+            
+            // Generate random position within container
+            const newX = 25 + Math.random() * maxX; // Offset by padding
+            const newY = 25 + Math.random() * maxY; // Offset by padding
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            // Prevent default click behavior to ensure no other action occurs
+            event.preventDefault();
+        }
+
+        if (window.matchMedia('(hover: hover)').matches) {
+            document.querySelector('.no-btn').addEventListener('mouseover', moveButton);
         }
     </script>
 </body>
