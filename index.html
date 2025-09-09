@@ -1,35 +1,247 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مودی بدبخت رو</title>
-  <style>
-    body {
-      direction: rtl;
-      text-align: center;
-      font-family: 'Tahoma', sans-serif;
-      background-color: #fff0f5;
-      color: #d63384;
-      padding: 50px 20px;
-      margin: 0;
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
-    img {
-      max-width: 90%;
-      height: auto;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آشتی کنیم؟ 💖</title>
+    <style>
+        body {
+            font-family: 'Vazir', Arial, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            direction: rtl;
+            animation: pageShake 3s infinite ease-in-out;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            position: relative;
+            border: 2px solid #ff4757;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff4757;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .heart {
+            width: 80px;
+            height: 80px;
+            background: url('https://raw.githubusercontent.com/websiteparsa/bng/refs/heads/main/nn.jpg') no-repeat center;
+            background-size: cover;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background: #ff4757;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background: #e63946;
+            transform: scale(1.1);
+        }
+
+        .no-btn {
+            background: #ccc;
+            color: #333;
+            position: relative;
+            animation: shake 0.5s infinite;
+        }
+
+        @media (hover: none) {
+            .no-btn {
+                pointer-events: none;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pageShake {
+            0% { transform: translateY(-5px) rotate(0deg); }
+            50% { transform: translateY(5px) rotate(1deg); }
+            100% { transform: translateY(-5px) rotate(0deg); }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+
+        .hearts-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff4757;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: float 4s infinite ease-in-out;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4757;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.6em;
+            }
+            p {
+                font-size: 0.95em;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .heart {
+                width: 60px;
+                height: 60px;
+            }
+            .success-message {
+                font-size: 1em;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>🎀 تولدت مبارک مودی بدبخت🎀</h1>
-  <img src="https://raw.githubusercontent.com/websiteparsa/bng/refs/heads/main/nn.jpg" alt="پرنسسعلی">
+    <div class="container">
+        <h1>آشتی کنیم؟ 💖</h1>
+        <p>هی ستی، دلت میاد با من قهر باشی؟ 😢 بیا دیگه! یه قلب خوشگل برات آوردم، نمی‌تونی از این همه عشق و حال فرار کنی! 😘</p>
+        <div class="heart"></div>
+        <div class="buttons">
+            <button class="yes-btn" onclick="showSuccessMessage()">آشتی می‌کنم</button>
+            <button class="no-btn">آشتی نمی‌کنم</button>
+        </div>
+    </div>
+    <div class="hearts-bg">
+        <div class="heart-particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="heart-particle" style="left: 25%; animation-delay: 0.5s;"></div>
+        <div class="heart-particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="heart-particle" style="left: 55%; animation-delay: 1.5s;"></div>
+        <div class="heart-particle" style="left: 70%; animation-delay: 2s;"></div>
+        <div class="heart-particle" style="left: 85%; animation-delay: 2.5s;"></div>
+    </div>
+    <div class="success-message" id="successMessage">
+        گزینه درست رو انتخاب کردی! 😍
+    </div>
+    <script>
+        function showSuccessMessage() {
+            const message = document.getElementById('successMessage');
+            message.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'https://persian11.cdn.asset.aparat.com/aparat-video/a7bdc0941661a974137ade9e0fc7b43d66145849-240p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImY5Nzc0NTgyNWZlNWVkMjFjMTYzYTRkYmZhMzc1NzNkIiwiZXhwIjoxNzU3NDMyOTkxLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.zIEHSmZLCXiaubCsJf10UtBQWT-DiSZwS3bDPVYuybI';
+            }, 1500);
+        }
+
+        if (window.matchMedia('(hover: none)').matches) {
+            document.querySelector('.no-btn').style.pointerEvents = 'none';
+        } else {
+            document.querySelector('.no-btn').addEventListener('mouseover', function() {
+                const container = document.querySelector('.container');
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = this.getBoundingClientRect();
+                
+                // Calculate max boundaries within container, accounting for padding
+                const maxX = containerRect.width - buttonRect.width - 50; // 25px padding on each side
+                const maxY = containerRect.height - buttonRect.height - 50; // 25px padding on each side
+                
+                // Generate random position within container
+                const newX = 25 + Math.random() * maxX; // Offset by padding
+                const newY = 25 + Math.random() * maxY; // Offset by padding
+                
+                this.style.position = 'absolute';
+                this.style.left = newX + 'px';
+                this.style.top = newY + 'px';
+            });
+        }
+    </script>
 </body>
 </html>
-
