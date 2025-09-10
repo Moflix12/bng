@@ -27,6 +27,7 @@
             max-width: 90%;
             position: relative;
             border: 2px solid #ff4757;
+            z-index: 2;
         }
 
         h1 {
@@ -86,7 +87,7 @@
             background: #ccc;
             color: #333;
             position: relative;
-            pointer-events: auto; /* Allow interaction for movement */
+            pointer-events: auto;
         }
 
         @keyframes pulse {
@@ -132,48 +133,19 @@
             }
         }
 
-        .success-message {
+        /* استایل ویدیو تمام‌صفحه */
+        #videoOverlay {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #ff4757;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1.2em;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.5s;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: black;
+            z-index: 999;
         }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 1.6em;
-            }
-            p {
-                font-size: 0.95em;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-            .heart {
-                width: 60px;
-                height: 60px;
-            }
-            .success-message {
-                font-size: 1em;
-                padding: 15px;
-            }
+        #videoOverlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -183,7 +155,7 @@
         <p>هی ستی، دلت میاد با من قهر باشی؟ 😢 بیا دیگه! یه قلب خوشگل برات آوردم، نمی‌تونی از این همه عشق و حال فرار کنی! 😘</p>
         <div class="heart"></div>
         <div class="buttons">
-            <button class="yes-btn" onclick="showSuccessMessage()">آشتی می‌کنم</button>
+            <button class="yes-btn" onclick="playVideo()">آشتی می‌کنم</button>
             <button class="no-btn" onclick="moveButton()">آشتی نمی‌کنم</button>
         </div>
     </div>
@@ -195,16 +167,21 @@
         <div class="heart-particle" style="left: 70%; animation-delay: 2s;"></div>
         <div class="heart-particle" style="left: 85%; animation-delay: 2.5s;"></div>
     </div>
-    <div class="success-message" id="successMessage">
-        گزینه درست رو انتخاب کردی! 😍
+
+    <!-- ویدیو تمام‌صفحه -->
+    <div id="videoOverlay">
+        <video id="myVideo" controls>
+            <source src="https://raw.githack.com/websiteparsa/bng/main/43966c898c3d7ce7bad5ec7a2a8c8c6866103569-1080p.mp4" type="video/mp4">
+            مرورگر شما ویدئو را پخش نمی‌کند.
+        </video>
     </div>
+
     <script>
-        function showSuccessMessage() {
-            const message = document.getElementById('successMessage');
-            message.style.display = 'block';
+        function playVideo() {
             setTimeout(() => {
-                window.location.href = 'https://caspian6.cdn.asset.aparat.com/aparat-video/43966c898c3d7ce7bad5ec7a2a8c8c6866103569-480p.mp4?wmsAuthSign=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IjVjMzAwZTg5OGEzYjA1MjQxNmU3MjRmOWM5NjBhNzI3IiwiZXhwIjoxNzU3NDU5MTgyLCJpc3MiOiJTYWJhIElkZWEgR1NJRyJ9.2O2tQM2g7DXiYmSe3zu2dllLeBb6n55dcpNSJg86uCI';
-            }, 1500);
+                document.getElementById("videoOverlay").style.display = "block";
+                document.getElementById("myVideo").play();
+            }, 1000); // یک ثانیه تاخیر
         }
 
         function moveButton() {
@@ -213,19 +190,16 @@
             const containerRect = container.getBoundingClientRect();
             const buttonRect = noBtn.getBoundingClientRect();
             
-            // Calculate max boundaries within container, accounting for padding
-            const maxX = containerRect.width - buttonRect.width - 50; // 25px padding on each side
-            const maxY = containerRect.height - buttonRect.height - 50; // 25px padding on each side
+            const maxX = containerRect.width - buttonRect.width - 50;
+            const maxY = containerRect.height - buttonRect.height - 50;
             
-            // Generate random position within container
-            const newX = 25 + Math.random() * maxX; // Offset by padding
-            const newY = 25 + Math.random() * maxY; // Offset by padding
+            const newX = 25 + Math.random() * maxX;
+            const newY = 25 + Math.random() * maxY;
             
             noBtn.style.position = 'absolute';
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
             
-            // Prevent default click behavior to ensure no other action occurs
             event.preventDefault();
         }
 
@@ -235,5 +209,3 @@
     </script>
 </body>
 </html>
-
-
